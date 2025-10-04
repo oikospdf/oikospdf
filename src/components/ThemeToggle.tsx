@@ -23,10 +23,10 @@ export const ThemeToggle = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="themebased"
       size="icon"
       onClick={toggleTheme}
-      className="transition-colors"
+      className="cursor-pointer text-gray-700"
     >
       {theme === "light" ? (
         <Moon className="h-5 w-5" />

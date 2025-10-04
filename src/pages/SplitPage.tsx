@@ -1,5 +1,7 @@
+import Layout from "@/components/Layout";
+
 const SplitPage = () => {
-    return <div>SplitPage</div>;
+    return <Layout><div>SplitPage</div></Layout>;
 };
 
 export default SplitPage;
