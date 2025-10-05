@@ -1,4 +1,5 @@
 import { PDFDocument } from "pdf-lib";
+import JSZip from "jszip";
 
 export const downloadPdf = (pdfBytes: Uint8Array, filename: string = "merged.pdf") => {
     const blob = new Blob([pdfBytes as BlobPart], { type: "application/pdf" });
@@ -82,3 +83,46 @@ export const convertImagesToPdfAndMerge = async (files: File[]): Promise<Uint8Ar
 
     return await pdfDoc.save();
 };
+
+export const dividePdfIntoSinglePages = async (
+    file: File
+  ): Promise<Uint8Array[]> => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdfDoc = await PDFDocument.load(arrayBuffer);
+    const totalPages = pdfDoc.getPageCount();
+  
+    const singlePagePdfs: Uint8Array[] = [];
+  
+    for (let i = 0; i < totalPages; i++) {
+      const newPdf = await PDFDocument.create();
+      const [copiedPage] = await newPdf.copyPages(pdfDoc, [i]);
+      newPdf.addPage(copiedPage);
+      const pdfBytes = await newPdf.save();
+      singlePagePdfs.push(pdfBytes);
+    }
+  
+    return singlePagePdfs;
+  };
+
+  export const createZipFromPdfs = async (
+    pdfFiles: Uint8Array[],
+    baseFilename: string
+  ): Promise<Blob> => {
+    const zip = new JSZip();
+  
+    pdfFiles.forEach((pdfBytes, index) => {
+      const filename = `${baseFilename}_page_${index + 1}.pdf`;
+      zip.file(filename, pdfBytes);
+    });
+  
+    return await zip.generateAsync({ type: "blob" });
+  };
+
+  export const downloadZip = (zipBlob: Blob, filename: string = "divided.zip") => {
+    const url = URL.createObjectURL(zipBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
