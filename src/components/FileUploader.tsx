@@ -4,28 +4,24 @@ import { toast } from "sonner";
 
 interface FileUploaderProps {
   onFilesSelected: (files: File[]) => void;
+  uploaderType: "pdf" | "image" | "both";
 }
 
-/**
- * A file uploader component that accepts image and PDF files.
- * It has a drag-and-drop area and a file input field.
- * When files are dropped or selected, it calls the onFilesSelected callback with the selected files.
- * If the files are not images or PDFs, it shows an error toast.
- * If the files are uploaded successfully, it shows a success toast.
- * @param {FileUploadProps} props - The props object.
- * @param {Function} props.onFilesSelected - A callback function that is called when files are selected.
- */
-export const FileUpload = ({ onFilesSelected }: FileUploaderProps) => {
+export const FileUploader = ({ onFilesSelected, uploaderType }: FileUploaderProps) => {
   const handleDrop = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       const files = Array.from(e.dataTransfer.files).filter(
         (file) =>
-          file.type.startsWith("image/") || file.type === "application/pdf"
+          uploaderType === "image"
+            ? file.type.startsWith("image/")
+            : uploaderType === "pdf"
+            ? file.type === "application/pdf"
+            : file.type.startsWith("image/") || file.type === "application/pdf"
       );
       
       if (files.length === 0) {
-        toast.error("Please upload images or PDF files only");
+        toast.error("Please upload valid files only");
         return;
       }
       
@@ -54,7 +50,7 @@ export const FileUpload = ({ onFilesSelected }: FileUploaderProps) => {
         id="file-upload"
         className="hidden"
         multiple
-        accept="image/*,application/pdf"
+        accept={uploaderType === "image" ? "image/*" : uploaderType === "pdf" ? "application/pdf" : "image/*,application/pdf"}
         onChange={handleFileInput}
       />
       <label htmlFor="file-upload" className="cursor-pointer">
@@ -63,7 +59,13 @@ export const FileUpload = ({ onFilesSelected }: FileUploaderProps) => {
           Drop files here or click to upload
         </p>
         <p className="text-sm text-muted-foreground">
-          Supports images (PNG, JPG, WEBP) and PDF files
+          {
+            uploaderType === "image"
+              ? "Supports image files (PNG, JPG, JPEG)"
+              : uploaderType === "pdf"
+              ? "Supports PDF files only"
+              : "Supports images (PNG, JPG, WEBP) and PDF files"
+          }
         </p>
       </label>
     </div>

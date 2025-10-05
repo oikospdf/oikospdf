@@ -8,27 +8,77 @@ export const downloadPdf = (pdfBytes: Uint8Array, filename: string = "merged.pdf
     link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
-  };
-  
+};
+
 export const splitPdf = async (
     file: File,
     startPage: number,
     endPage: number
-  ): Promise<Uint8Array> => {
+): Promise<Uint8Array> => {
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer);
     const totalPages = pdfDoc.getPageCount();
-  
+
     const validStart = Math.max(1, Math.min(startPage, totalPages));
     const validEnd = Math.max(validStart, Math.min(endPage, totalPages));
-  
+
     const newPdf = await PDFDocument.create();
     const pages = await newPdf.copyPages(
-      pdfDoc,
-      Array.from({ length: validEnd - validStart + 1 }, (_, i) => validStart - 1 + i)
+        pdfDoc,
+        Array.from({ length: validEnd - validStart + 1 }, (_, i) => validStart - 1 + i)
     );
-    
+
     pages.forEach((page) => newPdf.addPage(page));
-    
+
     return await newPdf.save();
+};
+
+export const mergePdfs = async (files: File[]): Promise<Uint8Array> => {
+    const mergedPdf = await PDFDocument.create();
+  
+    for (const file of files) {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await PDFDocument.load(arrayBuffer);
+      const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+      copiedPages.forEach((page) => mergedPdf.addPage(page));
+    }
+  
+    return await mergedPdf.save();
   };
+
+export const convertImagesToPdfAndMerge = async (files: File[]): Promise<Uint8Array> => {
+    const pdfDoc = await PDFDocument.create();
+
+    for (const file of files) {
+        if (file.type === "application/pdf") {
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await PDFDocument.load(arrayBuffer);
+            const copiedPages = await pdfDoc.copyPages(pdf, pdf.getPageIndices());
+            copiedPages.forEach((page) => pdfDoc.addPage(page));
+        } else if (file.type.startsWith("image/")) {
+            const arrayBuffer = await file.arrayBuffer();
+            let image;
+
+            if (file.type === "image/png") {
+                image = await pdfDoc.embedPng(arrayBuffer);
+            } else if (file.type === "image/jpeg" || file.type === "image/jpg") {
+                image = await pdfDoc.embedJpg(arrayBuffer);
+            } else {
+                console.warn(`Unsupported image format: ${file.type}`);
+                continue;
+            }
+
+            const page = pdfDoc.addPage([image.width, image.height]);
+            page.drawImage(image, {
+                x: 0,
+                y: 0,
+                width: image.width,
+                height: image.height,
+            });
+        } else {
+            console.warn(`Unsupported file type: ${file.type}`);
+        }
+    }
+
+    return await pdfDoc.save();
+};
