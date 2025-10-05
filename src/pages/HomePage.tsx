@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import ToolCard from "@/components/ToolCard";
+import { ToolCard } from "@/components/ToolCard";
 import { Trash2, Scissors, Merge, Axe } from "lucide-react";
 
 const HomePage = () => {

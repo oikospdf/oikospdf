@@ -8,7 +8,7 @@ interface ToolCardProps {
 }
 
 
-const ToolCard = ({ title, description, icon, path }: ToolCardProps) => {
+export const ToolCard = ({ title, description, icon, path }: ToolCardProps) => {
     return (
         <Link to={path}>
             <div className="bg-card border border-border rounded-lg p-6 text-left hover:border-primary transition-colors h-full cursor-pointer">
@@ -23,5 +23,3 @@ const ToolCard = ({ title, description, icon, path }: ToolCardProps) => {
         </Link>
     )
 }
-
-export default ToolCard
