@@ -14,7 +14,7 @@ const HomePage = () => {
             <div className="grid sm:grid-cols-2 2xl:grid-cols-3 gap-4 max-w-2xl mx-auto pt-4">
                 <ToolCard
                     title="Merge PDFs"
-                    description="Combine images and PDF files into a single document"
+                    description="Combine several PDF files into a single document"
                     icon={<Merge className="h-5 w-5 text-primary mt-0.5" />}
                     path="/merge"
                 />
