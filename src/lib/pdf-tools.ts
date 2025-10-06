@@ -171,3 +171,15 @@ export const deletePagesFromPdf = async (
 
   return await newPdf.save();
 };
+
+export const compressPdf = async (file: File): Promise<Uint8Array> => {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdfDoc = await PDFDocument.load(arrayBuffer);
+  
+  // Save with optimized settings to reduce file size
+  return await pdfDoc.save({
+    useObjectStreams: true,
+    addDefaultPage: false,
+    objectsPerTick: 50,
+  });
+};

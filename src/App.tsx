@@ -6,6 +6,7 @@ import DeletePage from './pages/DeletePage'
 import HomePage from './pages/HomePage'
 import ExtractPage from './pages/ExtractPage'
 import SplitPage from './pages/SplitPage'
+import CompressPage from './pages/CompressPage'
 import { Toaster } from 'sonner'
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/merge" element={<MergePage />} />
           <Route path="/extract" element={<ExtractPage />} />
           <Route path="/delete" element={<DeletePage />} />
+          <Route path="/compress" element={<CompressPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

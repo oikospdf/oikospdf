@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import { ToolCard } from "@/components/ToolCard";
-import { Trash2, Scissors, Merge, Axe } from "lucide-react";
+import { Trash2, Scissors, Merge, Axe, Shrink } from "lucide-react";
 
 const HomePage = () => {
 
@@ -38,6 +38,13 @@ const HomePage = () => {
                     description="Get a sub document by choosing a page range"
                     icon={<Axe className="h-5 w-5 text-primary mt-0.5" />}
                     path="/extract"
+                />
+
+                <ToolCard
+                    title="Compress PDF"
+                    description="Reduce the size of your PDF document while maintaining quality"
+                    icon={<Shrink className="h-5 w-5 text-primary mt-0.5" />}
+                    path="/compress"
                 />
 
             </div>
