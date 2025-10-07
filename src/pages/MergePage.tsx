@@ -1,11 +1,11 @@
 import Layout from "@/components/Layout";
 import { useState, useCallback } from "react";
-import { FileUploader } from "@/components/FileUploader";
+import { MultipleFileUploader } from "@/components/MultipleFileUploader";
 import { FileList } from "@/components/FileList";
 import { Button } from "@/components/ui/button";
 import { Download, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { convertImagesToPdfAndMerge, downloadPdf, mergePdfs } from "@/lib/pdf-tools";
+import { downloadPdf, mergePdfs } from "@/lib/pdf-tools";
 
 interface FileItem {
     id: string;
@@ -80,7 +80,11 @@ const MergePage = () => {
                 <p className="text-muted-foreground">
                     <span className="font-bold">Warning</span>: This tool is not limited to a specific amount of files. However, loading too many files may cause performance issues, since this app uses only your computer&apos;s resources. If you experience any issues, please try to reduce the number of files.
                 </p>
-                <FileUploader onFilesSelected={handleFilesSelected} uploaderType="pdf"/>
+                <MultipleFileUploader
+                    onFilesSelected={handleFilesSelected}
+                    title="Drop files here or click to upload"
+                    description="Supports PDF files only"
+                    uploaderType={["application/pdf"]} />
             </div>
 
             {files.length > 0 && (
@@ -117,8 +121,8 @@ const MergePage = () => {
                     </Button>
                 </div>
             )}
-      </Layout >
-  );
+        </Layout >
+    );
 };
 
 export default MergePage;

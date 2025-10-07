@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Upload } from "lucide-react";
+import { Download } from "lucide-react";
 import { toast } from "sonner";
 import { compressPdf, downloadPdf } from "@/lib/pdf-tools";
 import Layout from "@/components/Layout";
 import { PDFDocument } from "pdf-lib";
+import { SinglePDFUploader } from "@/components/SingleFileUploader";
 
 const Compress = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -41,14 +42,6 @@ const Compress = () => {
         }
     };
 
-    const handleDrop = (e: React.DragEvent) => {
-        e.preventDefault();
-        const droppedFile = e.dataTransfer.files[0];
-        if (droppedFile) {
-            handleFileSelected(droppedFile);
-        }
-    };
-
     const handleCompress = async () => {
         if (!file) {
             toast.error("Please select a PDF file first");
@@ -78,13 +71,6 @@ const Compress = () => {
         }
     };
 
-    const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = e.target.files?.[0];
-        if (selectedFile) {
-          handleFileSelected(selectedFile);
-        }
-      };
-
     const handleReset = () => {
         setFile(null);
         setOriginalSize(0);
@@ -100,33 +86,17 @@ const Compress = () => {
                         Reduce the size of your PDF document while maintaining quality
                     </p>
                     <p className="text-muted-foreground">
-                    <span className="font-bold">Warning</span>: This is an experimental tool. Some documents will reduce its size significantly, but in some other the reduction might be minimal or it will not be possible to compress the document at all. Compressing the same file again will not reduce its size anymore.
-                </p>
+                        <span className="font-bold">Warning</span>: This is an experimental tool. Some documents will reduce its size significantly, but in some other the reduction might be minimal or it will not be possible to compress the document at all. Compressing the same file again will not reduce its size anymore.
+                    </p>
                 </div>
 
                 {!file ? (
-                    <div
-                        onDrop={handleDrop}
-                        onDragOver={(e) => e.preventDefault()}
-                        className="border-2 border-dashed border-border rounded-lg p-12 text-center transition-colors hover:border-primary hover:bg-muted/50 cursor-pointer"
-                    >
-                        <input
-                            type="file"
-                            id="pdf-upload"
-                            className="hidden"
-                            accept="application/pdf"
-                            onChange={handleFileInput}
-                        />
-                        <label htmlFor="pdf-upload" className="cursor-pointer">
-                            <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                            <p className="text-lg font-medium mb-2">
-                                Drop PDF here or click to upload
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                                Upload a PDF file to compress it
-                            </p>
-                        </label>
-                    </div>
+                    <SinglePDFUploader
+                        onFileSelected={handleFileSelected}
+                        title="Drop PDF here or click to upload"
+                        description="Upload a PDF file to compress it"
+                    />
+
                 ) : (
                     <div className="bg-card border border-border rounded-lg p-6 space-y-4">
                         <div className="space-y-2">
@@ -168,8 +138,8 @@ const Compress = () => {
                     </div>
                 )}
             </div>
-    </Layout >
-  );
+        </Layout >
+    );
 };
 
 export default Compress;

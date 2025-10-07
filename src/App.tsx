@@ -22,6 +22,7 @@ function App() {
           <Route path="/extract" element={<ExtractPage />} />
           <Route path="/delete" element={<DeletePage />} />
           <Route path="/compress" element={<CompressPage />} />
+          
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

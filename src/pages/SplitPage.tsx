@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PDFDocument } from "pdf-lib";
-import { Download, Upload } from "lucide-react";
+import { Download } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { dividePdfIntoSinglePages, createZipFromPdfs, downloadZip } from "@/lib/pdf-tools";
+import { SinglePDFUploader } from "@/components/SingleFileUploader";
 
 const SplitPage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -30,21 +31,6 @@ const SplitPage = () => {
       toast.success(`PDF loaded: ${pages} pages`);
     } catch (error) {
       toast.error("Failed to read the PDF file");
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile) {
-      handleFileSelected(droppedFile);
-    }
-  };
-
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      handleFileSelected(selectedFile);
     }
   };
 
@@ -75,28 +61,12 @@ const SplitPage = () => {
       </div>
 
       {!file ? (
-        <div
-        onDrop={handleDrop}
-        onDragOver={(e) => e.preventDefault()}
-        className="border-2 border-dashed border-border rounded-lg p-12 text-center transition-colors hover:border-primary hover:bg-muted/50 cursor-pointer"
-      >
-        <input
-          type="file"
-          id="pdf-upload"
-          className="hidden"
-          accept="application/pdf"
-          onChange={handleFileInput}
+
+        <SinglePDFUploader
+          onFileSelected={handleFileSelected}
+          title="Drop PDF here or click to upload"
+          description="Upload a PDF file to split"
         />
-        <label htmlFor="pdf-upload" className="cursor-pointer">
-          <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-          <p className="text-lg font-medium mb-2">
-            Drop PDF here or click to upload
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Upload a PDF file to split
-          </p>
-        </label>
-      </div>
       ) : (
         <Card className="p-6 space-y-6">
           <div className="space-y-4">
