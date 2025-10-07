@@ -8,7 +8,8 @@ import ExtractPage from './pages/ExtractPage'
 import SplitPage from './pages/SplitPage'
 import CompressPage from './pages/CompressPage'
 import { Toaster } from 'sonner'
-
+import PngToPdfPage from './pages/PngToPdfPage'
+import SuperMergePage from './pages/SuperMergePage'
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
           <Route path="/extract" element={<ExtractPage />} />
           <Route path="/delete" element={<DeletePage />} />
           <Route path="/compress" element={<CompressPage />} />
-          
+          <Route path="/png-to-pdf" element={<PngToPdfPage />} />
+          <Route path="/super-merge" element={<SuperMergePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

@@ -3,10 +3,11 @@ import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Trash2, Upload, FileText } from "lucide-react";
+import { Trash2, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { deletePagesFromPdf, downloadPdf } from "@/lib/pdf-tools";
 import { PDFDocument } from "pdf-lib";
+import { SinglePDFUploader } from "@/components/SingleFileUploader";
 
 const DeletePage = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -33,23 +34,6 @@ const DeletePage = () => {
             toast.error("Failed to load PDF");
         }
     }, []);
-
-    const handleDrop = useCallback(
-        (e: React.DragEvent<HTMLDivElement>) => {
-            e.preventDefault();
-            const droppedFile = e.dataTransfer.files[0];
-            if (droppedFile) {
-                handleFileSelected(droppedFile);
-            }
-        },
-        [handleFileSelected]
-    );
-
-    const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            handleFileSelected(e.target.files[0]);
-        }
-    };
 
     const handleDelete = async () => {
         if (!file || !pagesToDelete.trim()) {
@@ -82,28 +66,11 @@ const DeletePage = () => {
             </div>
 
             {!file ? (
-                <div
-                    onDrop={handleDrop}
-                    onDragOver={(e) => e.preventDefault()}
-                    className="border-2 border-dashed border-border rounded-lg p-12 text-center transition-colors hover:border-primary hover:bg-muted/50 cursor-pointer"
-                >
-                    <input
-                        type="file"
-                        id="pdf-upload"
-                        className="hidden"
-                        accept="application/pdf"
-                        onChange={handleFileInput}
-                    />
-                    <label htmlFor="pdf-upload" className="cursor-pointer">
-                        <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                        <p className="text-lg font-medium mb-2">
-                            Drop PDF here or click to upload
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                            Upload a PDF file to remove pages
-                        </p>
-                    </label>
-                </div>
+                <SinglePDFUploader
+                    onFileSelected={handleFileSelected}
+                    title="Drop PDF here or click to upload"
+                    description="Upload a PDF file to remove pages"
+                />
             ) : (
                 <div className="space-y-6">
                     <div className="bg-card border border-border rounded-lg p-6">
