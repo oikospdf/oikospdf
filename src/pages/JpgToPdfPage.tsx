@@ -13,7 +13,7 @@ interface FileItem {
     preview?: string;
 }
 
-const PngToPdf = () => {
+const JpgToPdf = () => {
     const [files, setFiles] = useState<FileItem[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -65,9 +65,9 @@ const PngToPdf = () => {
         <Layout>
 
             <div className="text-center space-y-2">
-                <h2 className="text-3xl font-bold text-foreground">Convert PNGs to PDF</h2>
+                <h2 className="text-3xl font-bold text-foreground">Convert JPGs to PDF</h2>
                 <p className="text-muted-foreground">
-                    Convert and merge multiple PNG images into a single PDF document
+                    Convert and merge multiple JPG images into a single PDF document
                 </p>
             </div>
 
@@ -75,8 +75,8 @@ const PngToPdf = () => {
                 <MultipleFileUploader
                     onFilesSelected={handleFilesSelected}
                     title="Drop files here or click to upload"
-                    description="Supports only PNG files"
-                    uploaderType={["image/png"]}
+                    description="Supports only JPG/JPEG files"
+                    uploaderType={["image/jpg", "image/jpeg"]}
                 />
 
                 {files.length > 0 && (
@@ -110,4 +110,4 @@ const PngToPdf = () => {
     );
 };
 
-export default PngToPdf;
+export default JpgToPdf;

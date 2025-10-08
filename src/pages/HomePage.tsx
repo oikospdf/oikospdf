@@ -44,6 +44,12 @@ const TOOLS = [
         "description": "Convert and merge PNG files into a single PDF document.",
         "icon": <ImageIcon className="h-5 w-5 text-primary mt-0.5" />,
         "path": "/png-to-pdf"
+    },
+    {
+        "title": "JPG to PDF",
+        "description": "Convert and merge JPG files into a single PDF document.",
+        "icon": <ImageIcon className="h-5 w-5 text-primary mt-0.5" />,
+        "path": "/jpg-to-pdf"
     }
 ]
 

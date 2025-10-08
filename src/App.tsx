@@ -10,6 +10,7 @@ import CompressPage from './pages/CompressPage'
 import { Toaster } from 'sonner'
 import PngToPdfPage from './pages/PngToPdfPage'
 import SuperMergePage from './pages/SuperMergePage'
+import JpgToPdfPage from './pages/JpgToPdfPage'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/delete" element={<DeletePage />} />
           <Route path="/compress" element={<CompressPage />} />
           <Route path="/png-to-pdf" element={<PngToPdfPage />} />
+          <Route path="/jpg-to-pdf" element={<JpgToPdfPage />} />
           <Route path="/super-merge" element={<SuperMergePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
