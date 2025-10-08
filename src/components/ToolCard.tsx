@@ -11,8 +11,8 @@ interface ToolCardProps {
 export const ToolCard = ({ title, description, icon, path }: ToolCardProps) => {
     return (
         <Link to={path}>
-            <div className="bg-card border border-border rounded-lg p-6 text-left hover:border-primary transition-colors h-full cursor-pointer">
-                <div className="flex items-start gap-2 mb-2">
+            <div className="toolcard border border-border border-t-highlight rounded-2xl p-8 text-left hover:border-primary transition-colors h-full cursor-pointer">
+                <div className="flex items-center gap-4 mb-4">
                     {icon}
                     <h3 className="text-xl font-semibold">{title}</h3>
                 </div>

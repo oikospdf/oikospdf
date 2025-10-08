@@ -4,7 +4,7 @@ import { Trash2, Scissors, Merge, Axe, Shrink, ImageIcon, Combine } from "lucide
 
 const TOOLS = [
     {
-        "title": "Super Merge files",
+        "title": "Super Merge",
         "description": "Combine several images and PDF files into a single PDF document.",
         "icon": <Combine className="h-5 w-5 text-primary mt-0.5" />,
         "path": "/super-merge"
@@ -56,7 +56,7 @@ const HomePage = () => {
                 Work with your PDF files in several ways. Merge or split PDF documents with ease, turn images into documents and more.
             </p>
 
-            <div className="grid sm:grid-cols-2 2xl:grid-cols-3 gap-4 max-w-2xl mx-auto pt-4">
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 max-w-4xl mx-auto pt-4">
                 {
                     TOOLS.map((tool) => (
                         <ToolCard
