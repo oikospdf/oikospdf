@@ -1,5 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'sonner'
+
 import MergePage from './pages/MergePage'
 import NotFoundPage from './pages/NotFoundPage'
 import DeletePage from './pages/DeletePage'
@@ -7,10 +9,10 @@ import HomePage from './pages/HomePage'
 import ExtractPage from './pages/ExtractPage'
 import SplitPage from './pages/SplitPage'
 import CompressPage from './pages/CompressPage'
-import { Toaster } from 'sonner'
 import PngToPdfPage from './pages/PngToPdfPage'
 import SuperMergePage from './pages/SuperMergePage'
 import JpgToPdfPage from './pages/JpgToPdfPage'
+import SupportPage from './pages/SupportPage'
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path="/png-to-pdf" element={<PngToPdfPage />} />
           <Route path="/jpg-to-pdf" element={<JpgToPdfPage />} />
           <Route path="/super-merge" element={<SuperMergePage />} />
+          <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
