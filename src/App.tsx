@@ -12,7 +12,6 @@ import CompressPage from './pages/CompressPage'
 import PngToPdfPage from './pages/PngToPdfPage'
 import SuperMergePage from './pages/SuperMergePage'
 import JpgToPdfPage from './pages/JpgToPdfPage'
-import SupportPage from './pages/SupportPage'
 
 function App() {
   return (
@@ -29,7 +28,6 @@ function App() {
           <Route path="/png-to-pdf" element={<PngToPdfPage />} />
           <Route path="/jpg-to-pdf" element={<JpgToPdfPage />} />
           <Route path="/super-merge" element={<SuperMergePage />} />
-          <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
