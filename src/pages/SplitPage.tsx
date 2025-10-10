@@ -81,6 +81,7 @@ const SplitPage = () => {
                 variant="ghost"
                 size="sm"
                 className="cursor-pointer"
+                aria-label="Remove file"
                 onClick={() => {
                   setFile(null);
                   setPageCount(0);
@@ -101,6 +102,7 @@ const SplitPage = () => {
             className="w-full cursor-pointer"
             onClick={handleDivide}
             disabled={isProcessing}
+            aria-label="Divide PDF and download ZIP file"
           >
             {isProcessing ? (
               "Processing..."

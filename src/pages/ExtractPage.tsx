@@ -108,6 +108,7 @@ const ExtractPage = () => {
               <Button
                 variant="ghost"
                 size="sm"
+                aria-label="Remove file"
                 onClick={() => {
                   setFile(null);
                   setPageCount(0);
@@ -126,6 +127,7 @@ const ExtractPage = () => {
                 variant={splitMode === "start" ? "default" : "outline"}
                 className="justify-start h-auto py-4 px-4 cursor-pointer"
                 onClick={() => setSplitMode("start")}
+                aria-label="Extract from the beginning to page X"
               >
                 <div className="text-left">
                   <div className="font-medium">From beginning to page X</div>
@@ -139,6 +141,7 @@ const ExtractPage = () => {
                 variant={splitMode === "end" ? "default" : "outline"}
                 className="justify-start h-auto py-4 px-4 cursor-pointer"
                 onClick={() => setSplitMode("end")}
+                aria-label="Extract from page X to the end"
               >
                 <div className="text-left">
                   <div className="font-medium">From page X to end</div>
@@ -152,6 +155,7 @@ const ExtractPage = () => {
                 variant={splitMode === "range" ? "default" : "outline"}
                 className="justify-start h-auto py-4 px-4 cursor-pointer"
                 onClick={() => setSplitMode("range")}
+                aria-label="Extract from page X to page Y"
               >
                 <div className="text-left">
                   <div className="font-medium">Between pages X and Y</div>
@@ -234,6 +238,7 @@ const ExtractPage = () => {
                 disabled={isProcessing}
                 className="w-full cursor-pointer"
                 size="lg"
+                aria-label="Split PDF"
               >
                 <Scissors className="h-5 w-5 mr-2" />
                 {isProcessing ? "Splitting PDF..." : "Split PDF"}

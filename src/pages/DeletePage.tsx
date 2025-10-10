@@ -88,6 +88,7 @@ const DeletePage = () => {
                                 variant="ghost"
                                 className="cursor-pointer"
                                 size="sm"
+                                aria-label="Remove file"
                                 onClick={() => {
                                     setFile(null);
                                     setPageCount(0);
@@ -124,6 +125,7 @@ const DeletePage = () => {
                             disabled={isProcessing || !pagesToDelete.trim()}
                             className="w-full cursor-pointer"
                             size="lg"
+                            aria-label="Delete pages"
                         >
                             <Trash2 className="h-5 w-5 mr-2" />
                             {isProcessing ? "Processing..." : "Delete Pages"}

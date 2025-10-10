@@ -26,7 +26,8 @@ export const ThemeToggle = () => {
       variant="themebased"
       size="icon"
       onClick={toggleTheme}
-      className="cursor-pointer text-gray-700"
+      className="cursor-pointer text-gray-700 rounded-4xl"
+      aria-label="Toggle theme"
     >
       {theme === "light" ? (
         <Moon className="h-5 w-5" />

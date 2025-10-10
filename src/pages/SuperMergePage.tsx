@@ -99,6 +99,7 @@ const MergePage = () => {
                             size="sm"
                             onClick={handleClearAll}
                             className="text-muted-foreground"
+                            aria-label="Clear all files"
                         >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Clear all
@@ -116,6 +117,7 @@ const MergePage = () => {
                         disabled={isProcessing}
                         className="w-full"
                         size="lg"
+                        aria-label="Generate PDF"
                     >
                         <Download className="h-5 w-5 mr-2" />
                         {isProcessing ? "Generating PDF..." : "Generate PDF"}

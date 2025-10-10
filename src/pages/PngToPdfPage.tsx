@@ -98,6 +98,7 @@ const PngToPdf = () => {
                                 disabled={isProcessing}
                                 size="lg"
                                 className="min-w-[200px] cursor-pointer"
+                                aria-label="Create PDF"
                             >
                                 <Download className="mr-2 h-5 w-5" />
                                 {isProcessing ? "Creating PDF..." : "Create PDF"}

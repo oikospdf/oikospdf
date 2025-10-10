@@ -122,6 +122,7 @@ const Compress = () => {
                                 disabled={isProcessing}
                                 className="flex-1 cursor-pointer"
                                 size="lg"
+                                aria-label="Compress PDF"
                             >
                                 <Download className="h-5 w-5 mr-2" />
                                 {isProcessing ? "Compressing..." : "Compress PDF"}
@@ -131,6 +132,7 @@ const Compress = () => {
                                 variant="outline"
                                 size="lg"
                                 className="cursor-pointer"
+                                aria-label="Reset"
                             >
                                 Reset
                             </Button>

@@ -65,6 +65,7 @@ export const FileCard = ({ id, file, preview, onRemove }: FileCardProps) => {
         size="icon"
         onClick={() => onRemove(id)}
         className="opacity-0 group-hover:opacity-100 transition-opacity"
+        aria-label="Remove file"
       >
         <X className="h-4 w-4" />
       </Button>
