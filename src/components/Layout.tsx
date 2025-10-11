@@ -21,7 +21,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                         {/* TODO: Separate texts for future translations */}
                         <h2 className="text-3xl font-bold">About Oikos PDF</h2>
                         <p className="text-muted-foreground">
-                            Oikos PDF is a privacy first, open source minimalist PDF toolkit. All the process is done locally in your browser, and none of your data is sent to any server. All the code is open source and available on GitHub. You can check it by yourself here.
+                            Oikos PDF is a privacy first, open source minimalist PDF toolkit. All the process is done locally in your browser, and none of your data is sent to any server. All the code is open source and available on GitHub. You can check it by yourself here: <a href="https://github.com/oikospdf/oikospdf"><span className="font-bold">https://github.com/oikospdf/oikospdf</span></a>.
                         </p>
                         <p className="text-muted-foreground">
                             Our tools are desinged to be simple and straightforward, so you can use them in an intuitive way. If that is not the case, every tool has a short documentation at the end where you can find all the information you need.
