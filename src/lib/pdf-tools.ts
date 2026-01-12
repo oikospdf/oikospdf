@@ -1,4 +1,5 @@
 import { PDFDocument } from "pdf-lib";
+import * as pdfjsLib from "pdfjs-dist";
 import JSZip from "jszip";
 
 export const downloadPdf = (pdfBytes: Uint8Array, filename: string = "merged.pdf") => {
@@ -175,7 +176,7 @@ export const deletePagesFromPdf = async (
 export const compressPdf = async (file: File): Promise<Uint8Array> => {
   const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer);
-  
+
   // Save with optimized settings to reduce file size
   return await pdfDoc.save({
     useObjectStreams: true,
@@ -210,4 +211,74 @@ export const createPdfFromImages = async (files: File[]): Promise<Uint8Array> =>
   }
 
   return await pdfDoc.save();
+};
+
+export const reorderPdfPages = async (
+  file: File,
+  pageOrder: number[]
+): Promise<Uint8Array> => {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdfDoc = await PDFDocument.load(arrayBuffer);
+  const newPdf = await PDFDocument.create();
+
+  // Convert page numbers (1-indexed) to 0-indexed for pdf-lib
+  const pageIndices = pageOrder.map((pageNum) => pageNum - 1);
+  const pages = await newPdf.copyPages(pdfDoc, pageIndices);
+
+  pages.forEach((page) => newPdf.addPage(page));
+
+  return await newPdf.save();
+};
+
+export const convertPdfPagesToPng = async (
+  file: File
+): Promise<{ name: string; data: Blob }[]> => {
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const images: { name: string; data: Blob }[] = [];
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const viewport = page.getViewport({ scale: 2.0 }); // Higher scale for better quality
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    if (!context) continue;
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    await page.render({
+      canvasContext: context,
+      viewport: viewport,
+      canvas: canvas,
+    }).promise;
+
+    const blob = await new Promise<Blob>((resolve) => {
+      canvas.toBlob((b) => resolve(b!), "image/png");
+    });
+
+    const originalName = file.name.replace(/\.[^/.]+$/, "");
+    images.push({
+      name: `${originalName}_page_${i}.png`,
+      data: blob,
+    });
+  }
+
+  return images;
+};
+
+export const createZipFromImages = async (
+  images: { name: string; data: Blob }[]
+): Promise<Blob> => {
+  const zip = new JSZip();
+
+  images.forEach(({ name, data }) => {
+    zip.file(name, data);
+  });
+
+  return await zip.generateAsync({ type: "blob" });
 };
