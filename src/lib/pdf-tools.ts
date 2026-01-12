@@ -1,4 +1,5 @@
 import { PDFDocument } from "pdf-lib";
+import { PDFDocument as PDFDocumentWithEncrypt } from "pdf-lib-with-encrypt";
 import * as pdfjsLib from "pdfjs-dist";
 import JSZip from "jszip";
 
@@ -281,4 +282,28 @@ export const createZipFromImages = async (
   });
 
   return await zip.generateAsync({ type: "blob" });
+};
+
+export const protectPdfWithPassword = async (
+  file: File,
+  password: string
+): Promise<Uint8Array> => {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdfDoc = await PDFDocumentWithEncrypt.load(arrayBuffer);
+
+  pdfDoc.encrypt({
+    userPassword: password,
+    ownerPassword: password,
+    permissions: {
+      printing: "highResolution",
+      modifying: false,
+      copying: false,
+      annotating: false,
+      fillingForms: true,
+      contentAccessibility: true,
+      documentAssembly: false,
+    },
+  });
+
+  return await pdfDoc.save({ useObjectStreams: false });
 };

@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import { ToolCard } from "@/components/ToolCard";
-import { Trash2, Scissors, Merge, Axe, Shrink, ImageIcon, Combine } from "lucide-react";
+import { Trash2, Scissors, Merge, Axe, Shrink, ImageIcon, Combine, LockIcon } from "lucide-react";
 
 const TOOLS = [
     {
@@ -56,6 +56,12 @@ const TOOLS = [
         "description": "Convert a PDF document into several PNG files.",
         "icon": <ImageIcon className="h-5 w-5 text-primary mt-0.5" />,
         "path": "/pdf-to-png"
+    },
+    {
+        "title": "Protect PDF",
+        "description": "Protect your PDF document with a password.",
+        "icon": <LockIcon className="h-5 w-5 text-primary mt-0.5" />,
+        "path": "/protect"
     }
 ]
 

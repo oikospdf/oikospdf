@@ -13,6 +13,7 @@ import PngToPdfPage from './pages/PngToPdfPage'
 import SuperMergePage from './pages/SuperMergePage'
 import JpgToPdfPage from './pages/JpgToPdfPage'
 import PdfToPngPage from './pages/PdfToPngPage'
+import ProtectPdfPage from './pages/ProtectPdfPage'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/jpg-to-pdf" element={<JpgToPdfPage />} />
           <Route path="/super-merge" element={<SuperMergePage />} />
           <Route path="/pdf-to-png" element={<PdfToPngPage />} />
+          <Route path="/protect" element={<ProtectPdfPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
