@@ -186,14 +186,45 @@ export const compressPdf = async (file: File): Promise<Uint8Array> => {
   });
 };
 
+const convertWebpToPng = async (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Failed to get canvas context"));
+        return;
+      }
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob((blob) => {
+        if (blob) resolve(blob);
+        else reject(new Error("Failed to convert webp to PNG"));
+      }, "image/png");
+    };
+    img.onerror = () => reject(new Error("Failed to load webp image"));
+    img.src = URL.createObjectURL(file);
+  });
+};
+
 export const createPdfFromImages = async (files: File[]): Promise<Uint8Array> => {
   const pdfDoc = await PDFDocument.create();
 
   for (const file of files) {
-    const arrayBuffer = await file.arrayBuffer();
+    let arrayBuffer: ArrayBuffer;
     let image;
 
-    if (file.type === "image/png") {
+    if (file.type === "image/webp") {
+      // Convert webp to PNG first
+      const pngBlob = await convertWebpToPng(file);
+      arrayBuffer = await pngBlob.arrayBuffer();
+    } else {
+      arrayBuffer = await file.arrayBuffer();
+    }
+
+    if (file.type === "image/png" || file.type === "image/webp") {
       image = await pdfDoc.embedPng(arrayBuffer);
     } else if (file.type === "image/jpeg" || file.type === "image/jpg") {
       image = await pdfDoc.embedJpg(arrayBuffer);
@@ -306,4 +337,38 @@ export const protectPdfWithPassword = async (
   });
 
   return await pdfDoc.save({ useObjectStreams: false });
+};
+
+export const extractImagesFromZip = async (
+  file: File
+): Promise<{ name: string; file: File }[]> => {
+  const zip = new JSZip();
+  const zipContent = await zip.loadAsync(file);
+  const images: { name: string; file: File }[] = [];
+
+  const validExtensions = [".png", ".jpg", ".jpeg", ".webp"];
+
+  for (const [filename, zipEntry] of Object.entries(zipContent.files)) {
+    if (zipEntry.dir) continue;
+
+    const lowerName = filename.toLowerCase();
+    const isValidImage = validExtensions.some((ext) => lowerName.endsWith(ext));
+
+    if (isValidImage) {
+      const blob = await zipEntry.async("blob");
+      let mimeType = "image/png";
+      if (lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg")) {
+        mimeType = "image/jpeg";
+      } else if (lowerName.endsWith(".webp")) {
+        mimeType = "image/webp";
+      }
+      const imageFile = new File([blob], filename, { type: mimeType });
+      images.push({ name: filename, file: imageFile });
+    }
+  }
+
+  // Sort alphabetically by filename
+  images.sort((a, b) => a.name.localeCompare(b.name));
+
+  return images;
 };

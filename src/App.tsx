@@ -14,6 +14,7 @@ import SuperMergePage from './pages/SuperMergePage'
 import JpgToPdfPage from './pages/JpgToPdfPage'
 import PdfToPngPage from './pages/PdfToPngPage'
 import ProtectPdfPage from './pages/ProtectPdfPage'
+import ZipToPdfPage from './pages/ZipToPdfPage'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/super-merge" element={<SuperMergePage />} />
           <Route path="/pdf-to-png" element={<PdfToPngPage />} />
           <Route path="/protect" element={<ProtectPdfPage />} />
+          <Route path="/zip-to-pdf" element={<ZipToPdfPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

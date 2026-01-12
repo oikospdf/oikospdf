@@ -1,12 +1,13 @@
 import { Upload } from "lucide-react";
 
-interface SinglePDFUploaderProps {
+interface SingleFileUploaderProps {
     onFileSelected: (files: File) => void;
     title: string;
     description: string;
+    accept?: string;
 }
 
-export const SinglePDFUploader = ({ onFileSelected, title, description }: SinglePDFUploaderProps) => {
+export const SingleFileUploader = ({ onFileSelected, title, description, accept = "application/pdf" }: SingleFileUploaderProps) => {
 
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
@@ -33,7 +34,7 @@ export const SinglePDFUploader = ({ onFileSelected, title, description }: Single
                 type="file"
                 id="file-upload"
                 className="hidden"
-                accept="application/pdf"
+                accept={accept}
                 onChange={handleFileInput}
             />
             <label htmlFor="file-upload" className="cursor-pointer">

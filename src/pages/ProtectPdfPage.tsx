@@ -8,7 +8,7 @@ import { FileText, EyeOff, Eye, Download } from "lucide-react";
 import { toast } from "sonner";
 import { downloadPdf, protectPdfWithPassword } from "@/lib/pdf-tools";
 import { PDFDocument } from "pdf-lib";
-import { SinglePDFUploader } from "@/components/SingleFileUploader";
+import { SingleFileUploader } from "@/components/SingleFileUploader";
 
 const ProtectPdfPage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -84,7 +84,7 @@ const ProtectPdfPage = () => {
 
       {!file ? (
 
-        <SinglePDFUploader
+        <SingleFileUploader
           onFileSelected={handleFileSelected}
           title="Drop PDF here or click to upload"
           description="Upload a PDF to protect"

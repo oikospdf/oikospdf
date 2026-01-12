@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { compressPdf, downloadPdf } from "@/lib/pdf-tools";
 import Layout from "@/components/Layout";
 import { PDFDocument } from "pdf-lib";
-import { SinglePDFUploader } from "@/components/SingleFileUploader";
+import { SingleFileUploader } from "@/components/SingleFileUploader";
 
 const Compress = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -91,7 +91,7 @@ const Compress = () => {
                 </div>
 
                 {!file ? (
-                    <SinglePDFUploader
+                    <SingleFileUploader
                         onFileSelected={handleFileSelected}
                         title="Drop PDF here or click to upload"
                         description="Upload a PDF file to compress it"

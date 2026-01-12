@@ -7,7 +7,7 @@ import { PDFDocument } from "pdf-lib";
 import { Download } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { downloadZip, convertPdfPagesToPng, createZipFromImages } from "@/lib/pdf-tools";
-import { SinglePDFUploader } from "@/components/SingleFileUploader";
+import { SingleFileUploader } from "@/components/SingleFileUploader";
 
 const PdfToPngPage = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -66,7 +66,7 @@ const PdfToPngPage = () => {
 
             {!file ? (
 
-                <SinglePDFUploader
+                <SingleFileUploader
                     onFileSelected={handleFileSelected}
                     title="Drop PDF here or click to upload"
                     description="Upload a PDF file to convert"

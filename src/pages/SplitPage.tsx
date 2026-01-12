@@ -7,7 +7,7 @@ import { PDFDocument } from "pdf-lib";
 import { Download } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { dividePdfIntoSinglePages, createZipFromPdfs, downloadZip } from "@/lib/pdf-tools";
-import { SinglePDFUploader } from "@/components/SingleFileUploader";
+import { SingleFileUploader } from "@/components/SingleFileUploader";
 
 const SplitPage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -62,7 +62,7 @@ const SplitPage = () => {
 
       {!file ? (
 
-        <SinglePDFUploader
+        <SingleFileUploader
           onFileSelected={handleFileSelected}
           title="Drop PDF here or click to upload"
           description="Upload a PDF file to split"

@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import { ToolCard } from "@/components/ToolCard";
-import { Trash2, Scissors, Merge, Axe, Shrink, ImageIcon, Combine, LockIcon } from "lucide-react";
+import { Trash2, Scissors, Merge, Axe, Shrink, ImageIcon, Combine, LockIcon, Package } from "lucide-react";
 
 const TOOLS = [
     {
@@ -62,6 +62,12 @@ const TOOLS = [
         "description": "Protect your PDF document with a password.",
         "icon": <LockIcon className="h-5 w-5 text-primary mt-0.5" />,
         "path": "/protect"
+    },
+    {
+        "title": "Zip to PDF",
+        "description": "Convert a zip file containing images (PNG/JPG/WEBP) into a PDF document.",
+        "icon": <Package className="h-5 w-5 text-primary mt-0.5" />,
+        "path": "/zip-to-pdf"
     }
 ]
 

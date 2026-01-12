@@ -8,7 +8,7 @@ import { Scissors, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { splitPdf, downloadPdf } from "@/lib/pdf-tools";
 import { PDFDocument } from "pdf-lib";
-import { SinglePDFUploader } from "@/components/SingleFileUploader";
+import { SingleFileUploader } from "@/components/SingleFileUploader";
 
 type SplitMode = "start" | "end" | "range" | null;
 
@@ -87,7 +87,7 @@ const ExtractPage = () => {
 
       {!file ? (
 
-        <SinglePDFUploader
+        <SingleFileUploader
           onFileSelected={handleFileSelected}
           title="Drop PDF here or click to upload"
           description="Upload a PDF file to split"

@@ -7,7 +7,7 @@ import { Trash2, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { deletePagesFromPdf, downloadPdf } from "@/lib/pdf-tools";
 import { PDFDocument } from "pdf-lib";
-import { SinglePDFUploader } from "@/components/SingleFileUploader";
+import { SingleFileUploader } from "@/components/SingleFileUploader";
 
 const DeletePage = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -66,7 +66,7 @@ const DeletePage = () => {
             </div>
 
             {!file ? (
-                <SinglePDFUploader
+                <SingleFileUploader
                     onFileSelected={handleFileSelected}
                     title="Drop PDF here or click to upload"
                     description="Upload a PDF file to remove pages"
